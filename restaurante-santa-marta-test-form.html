@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Brisa Marina – Restaurante Santa Marta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand: #f5ede0;
+      --cream: #fdf8f2;
+      --coral: #d95f3b;
+      --coral-dark: #b84a2a;
+      --ocean: #1a4a5c;
+      --ocean-light: #2a6880;
+      --gold: #c9943a;
+      --text: #2c1f14;
+      --text-light: #7a6555;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(253, 248, 242, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201,148,58,0.2);
+      transition: all 0.3s;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--ocean);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--coral); font-style: italic; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--coral); }
+    .nav-cta {
+      background: var(--coral);
+      color: white !important;
+      padding: 0.55rem 1.4rem;
+      border-radius: 2rem;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--coral-dark) !important; color: white !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 5rem;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5rem 4rem 5rem 5rem;
+      position: relative;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .hero-tag::before {
+      content: ''; display: block; width: 2rem; height: 1px; background: var(--gold);
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.1;
+      color: var(--ocean);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em { color: var(--coral); font-style: italic; }
+    .hero-desc {
+      color: var(--text-light);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--coral);
+      color: white;
+      padding: 0.9rem 2rem;
+      border-radius: 3rem;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.25s;
+      box-shadow: 0 4px 20px rgba(217,95,59,0.35);
+    }
+    .btn-primary:hover {
+      background: var(--coral-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(217,95,59,0.4);
+    }
+    .btn-secondary {
+      color: var(--ocean);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: gap 0.2s;
+    }
+    .btn-secondary:hover { gap: 0.8rem; }
+    .btn-secondary::after { content: '→'; }
+
+    .hero-badges {
+      display: flex; gap: 2rem; margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(201,148,58,0.2);
+    }
+    .badge { text-align: center; }
+    .badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 700;
+      color: var(--ocean);
+    }
+    .badge-label { font-size: 0.78rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-img-wrap {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #1a4a5c 0%, #2a6880 40%, #c9943a 100%);
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-img-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-food-icon {
+      font-size: 8rem;
+      opacity: 0.15;
+      position: absolute;
+    }
+    .hero-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      width: 300px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      position: relative; z-index: 1;
+      animation: floatCard 3s ease-in-out infinite;
+    }
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .card-dish {
+      width: 100%; height: 160px;
+      background: linear-gradient(135deg, #f5ede0, #c9943a33);
+      border-radius: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: var(--ocean);
+      margin-bottom: 0.3rem;
+    }
+    .card-sub { font-size: 0.82rem; color: var(--text-light); margin-bottom: 0.8rem; }
+    .card-price {
+      font-weight: 700; color: var(--coral);
+      font-size: 1.1rem;
+    }
+    .card-stars { color: var(--gold); font-size: 0.85rem; float: right; }
+
+    /* SECTION SHARED */
+    section { padding: 6rem 5rem; }
+    .section-tag {
+      font-size: 0.75rem; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gold);
+      display: flex; align-items: center; gap: 0.6rem;
+      margin-bottom: 1rem;
+    }
+    .section-tag::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--gold); }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      color: var(--ocean);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .section-title em { color: var(--coral); font-style: italic; }
+    .section-sub {
+      color: var(--text-light);
+      font-size: 1rem; line-height: 1.7;
+      max-width: 500px;
+      margin-bottom: 3rem;
+    }
+
+    /* MENU */
+    .menu { background: var(--sand); }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .menu-card {
+      background: white;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    .menu-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    }
+    .menu-img {
+      height: 160px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3.5rem;
+    }
+    .menu-img.bg1 { background: linear-gradient(135deg, #1a4a5c22, #1a4a5c44); }
+    .menu-img.bg2 { background: linear-gradient(135deg, #d95f3b22, #d95f3b44); }
+    .menu-img.bg3 { background: linear-gradient(135deg, #c9943a22, #c9943a44); }
+    .menu-img.bg4 { background: linear-gradient(135deg, #2a688022, #2a688044); }
+    .menu-img.bg5 { background: linear-gradient(135deg, #7a655522, #7a655544); }
+    .menu-img.bg6 { background: linear-gradient(135deg, #1a4a5c33, #c9943a33); }
+    .menu-info { padding: 1.2rem; }
+    .menu-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; color: var(--ocean);
+      margin-bottom: 0.3rem;
+    }
+    .menu-desc { font-size: 0.82rem; color: var(--text-light); line-height: 1.5; margin-bottom: 0.8rem; }
+    .menu-footer { display: flex; justify-content: space-between; align-items: center; }
+    .menu-price { font-weight: 700; color: var(--coral); }
+    .menu-tag-label {
+      font-size: 0.72rem; background: var(--sand); color: var(--text-light);
+      padding: 0.2rem 0.6rem; border-radius: 1rem;
+    }
+
+    /* SOBRE NOSOTROS */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      padding: 6rem 5rem;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-main-box {
+      background: linear-gradient(135deg, var(--ocean), var(--ocean-light));
+      border-radius: 1.5rem;
+      height: 380px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 6rem;
+      color: white;
+    }
+    .about-float {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--coral);
+      color: white;
+      border-radius: 1rem;
+      padding: 1.2rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(217,95,59,0.4);
+    }
+    .about-float-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; display: block;
+    }
+    .about-float-text { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.9; }
+    .about-features { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2rem; }
+    .feature {
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .feature-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      background: var(--sand);
+      border-radius: 0.8rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+    }
+    .feature-title { font-weight: 500; color: var(--ocean); font-size: 0.95rem; margin-bottom: 0.2rem; }
+    .feature-desc { font-size: 0.83rem; color: var(--text-light); line-height: 1.5; }
+
+    /* GALERIA */
+    .gallery { background: var(--ocean); }
+    .gallery .section-title { color: white; }
+    .gallery .section-tag { color: var(--gold); }
+    .gallery .section-sub { color: rgba(255,255,255,0.6); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 200px 200px;
+      gap: 1rem;
+    }
+    .gallery-item {
+      border-radius: 1rem;
+      overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+      transition: transform 0.3s;
+    }
+    .gallery-item:hover { transform: scale(1.02); }
+    .gallery-item:first-child { grid-row: span 2; font-size: 5rem; }
+    .gi1 { background: linear-gradient(135deg, #c9943a55, #c9943a99); }
+    .gi2 { background: linear-gradient(135deg, #d95f3b55, #d95f3b99); }
+    .gi3 { background: linear-gradient(135deg, #2a688055, #2a688099); }
+    .gi4 { background: linear-gradient(135deg, #c9943a33, #d95f3b55); }
+    .gi5 { background: linear-gradient(135deg, #2a688033, #1a4a5c55); }
+
+    /* CONTACTO / RESERVAS */
+    .contact {
+      background: var(--sand);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 1rem; }
+    .contact-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .contact-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: white;
+      border-radius: 0.8rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .contact-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-light); margin-bottom: 0.2rem; }
+    .contact-value { font-weight: 500; color: var(--ocean); }
+
+    .form-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: var(--ocean);
+      margin-bottom: 1.5rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+    .form-group label { font-size: 0.82rem; font-weight: 500; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.08em; }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 0.75rem 1rem;
+      border: 1.5px solid #e8ddd4;
+      border-radius: 0.7rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--coral);
+    }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .btn-form {
+      width: 100%;
+      background: var(--coral);
+      color: white;
+      border: none; cursor: pointer;
+      padding: 1rem;
+      border-radius: 3rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem; font-weight: 500;
+      transition: all 0.25s;
+      box-shadow: 0 4px 20px rgba(217,95,59,0.35);
+    }
+    .btn-form:hover {
+      background: var(--coral-dark);
+      transform: translateY(-2px);
+    }
+
+    /* WHATSAPP */
+    .whatsapp-btn {
+      position: fixed; bottom: 2rem; right: 2rem;
+      background: #25d366;
+      color: white;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      z-index: 200;
+      transition: all 0.25s;
+    }
+    .whatsapp-btn:hover { transform: scale(1.1); }
+
+    /* FOOTER */
+    footer {
+      background: var(--ocean);
+      color: rgba(255,255,255,0.7);
+      padding: 3rem 5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; color: white;
+    }
+    .footer-logo span { color: var(--coral); font-style: italic; }
+    footer p { font-size: 0.85rem; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+    .footer-links a:hover { color: white; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-left > * {
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-left > *:nth-child(2) { animation-delay: 0.25s; }
+    .hero-left > *:nth-child(3) { animation-delay: 0.4s; }
+    .hero-left > *:nth-child(4) { animation-delay: 0.55s; }
+    .hero-left > *:nth-child(5) { animation-delay: 0.7s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 6rem 1.5rem 3rem; }
+      section { padding: 4rem 1.5rem; }
+      .menu-grid { grid-template-columns: 1fr 1fr; }
+      .about { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item:first-child { grid-row: span 1; }
+      .contact { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 2rem; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">La <span>Brisa</span> Marina</div>
+    <ul class="nav-links">
+      <li><a href="#menu">Menú</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#reservas" class="nav-cta">Reservar</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-tag">Santa Marta, Colombia</div>
+      <h1>Sabores del <em>Caribe</em> en cada bocado</h1>
+      <p class="hero-desc">Pescados frescos del día, ceviches artesanales y el mejor patacón de la ciudad. Ven a vivir la auténtica gastronomía costeña frente al mar.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn-primary">Ver el menú</a>
+        <a href="#reservas" class="btn-secondary">Hacer reserva</a>
+      </div>
+      <div class="hero-badges">
+        <div class="badge">
+          <div class="badge-num">12+</div>
+          <div class="badge-label">Años sirviendo</div>
+        </div>
+        <div class="badge">
+          <div class="badge-num">4.9★</div>
+          <div class="badge-label">En Google</div>
+        </div>
+        <div class="badge">
+          <div class="badge-num">500+</div>
+          <div class="badge-label">Clientes felices</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-wrap">
+        <div class="hero-food-icon">🌊</div>
+        <div class="hero-card">
+          <div class="card-dish">🦞</div>
+          <div class="card-title">Langosta al ajillo</div>
+          <div class="card-sub">Especialidad del chef · Plato estrella</div>
+          <div class="card-price">$85.000 COP <span class="card-stars">★★★★★</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu" id="menu">
+    <div class="section-tag">Lo mejor de la costa</div>
+    <h2 class="section-title">Nuestro <em>Menú</em></h2>
+    <p class="section-sub">Ingredientes frescos traídos directamente del mercado del pescador cada mañana.</p>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <div class="menu-img bg1">🐟</div>
+        <div class="menu-info">
+          <div class="menu-name">Pargo frito entero</div>
+          <div class="menu-desc">Pargo rojo del día, frito en aceite de palma, con patacones y ensalada criolla.</div>
+          <div class="menu-footer">
+            <span class="menu-price">$38.000</span>
+            <span class="menu-tag-label">🏆 Más pedido</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img bg2"></div>
+        <div class="menu-info">
+          <div class="menu-name">Ceviche de camarón</div>
+          <div class="menu-desc">Camarones tigre marinados en limón, con ají, cilantro y leche de coco.</div>
+          <div class="menu-footer">
+            <span class="menu-price">$32.000</span>
+            <span class="menu-tag-label">✨ Entrada</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img bg3">🦑</div>
+        <div class="menu-info">
+          <div class="menu-name">Cazuela de mariscos</div>
+          <div class="menu-desc">Mix de camarones, calamar y mejillones en salsa de coco y ají dulce.</div>
+          <div class="menu-footer">
+            <span class="menu-price">$55.000</span>
+            <span class="menu-tag-label">⭐ Especial</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img bg4">🥘</div>
+        <div class="menu-info">
+          <div class="menu-name">Arroz con coco</div>
+          <div class="menu-desc">Arroz preparado con leche de coco fresca, acompañante perfecto para todo.</div>
+          <div class="menu-footer">
+            <span class="menu-price">$12.000</span>
+            <span class="menu-tag-label">🌴 Típico</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img bg5">🐚</div>
+        <div class="menu-info">
+          <div class="menu-name">Patacón pisao</div>
+          <div class="menu-desc">Patacón grande con hogao, queso costeño y guacamole de la casa.</div>
+          <div class="menu-footer">
+            <span class="menu-price">$18.000</span>
+            <span class="menu-tag-label">💚 Vegetariano</span>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card">
+        <div class="menu-img bg6">🍹</div>
+        <div class="menu-info">
+          <div class="menu-name">Limonada de coco</div>
+          <div class="menu-desc">Limonada natural con leche de coco, menta y hielo granizado. Refrescante.</div>
+          <div class="menu-footer">
+            <span class="menu-price">$10.000</span>
+            <span class="menu-tag-label">🥤 Bebida</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE NOSOTROS -->
+  <section class="about" id="nosotros">
+    <div class="about-visual">
+      <div class="about-main-box">🌊</div>
+      <div class="about-float">
+        <span class="about-float-num">12</span>
+        <span class="about-float-text">Años de tradición</span>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="section-tag">Nuestra historia</div>
+      <h2 class="section-title">Cocina con <em>alma</em> caribeña</h2>
+      <p class="section-sub">Somos una familia samaria que lleva más de 12 años trayendo los sabores auténticos del Caribe colombiano a su mesa. Cada plato es preparado con amor y recetas heredadas de generación en generación.</p>
+      <div class="about-features">
+        <div class="feature">
+          <div class="feature-icon">🐟</div>
+          <div>
+            <div class="feature-title">Pescado del día</div>
+            <div class="feature-desc">Compramos directamente a los pescadores locales cada mañana para garantizar la máxima frescura.</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">👨‍🍳</div>
+          <div>
+            <div class="feature-title">Chef costeño</div>
+            <div class="feature-desc">Nuestro chef Carlos tiene 20 años de experiencia en gastronomía del Caribe colombiano.</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🌴</div>
+          <div>
+            <div class="feature-title">Ambiente familiar</div>
+            <div class="feature-desc">Un lugar para compartir en familia con vista al mar y brisa fresca todo el día.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section class="gallery" id="galeria">
+    <div class="section-tag">Momentos en La Brisa</div>
+    <h2 class="section-title">Una experiencia <em>única</em></h2>
+    <p class="section-sub">Capturas de nuestros platos, ambiente y los mejores atardeceres de Santa Marta.</p>
+    <div class="gallery-grid">
+      <div class="gallery-item gi1">🦞</div>
+      <div class="gallery-item gi2">🐟</div>
+      <div class="gallery-item gi3">🌅</div>
+      <div class="gallery-item gi4">🍤</div>
+      <div class="gallery-item gi5">🌴</div>
+    </div>
+  </section>
+
+  <!-- RESERVAS / CONTACTO -->
+  <section class="contact" id="reservas">
+    <div>
+      <div class="section-tag">Visítanos</div>
+      <h2 class="section-title">Haz tu <em>reserva</em></h2>
+      <p class="section-sub">Reserva tu mesa con anticipación, especialmente los fines de semana. ¡Te esperamos!</p>
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Dirección</div>
+            <div class="contact-value">Cra. 1 #18-44, El Rodadero, Santa Marta</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-label">Horario</div>
+            <div class="contact-value">Lunes–Domingo: 11:00 am – 10:00 pm</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Teléfono / WhatsApp</div>
+            <div class="contact-value">+57 300 123 4567</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📸</div>
+          <div>
+            <div class="contact-label">Instagram</div>
+            <div class="contact-value">@labrisamarina_smt</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-card">
+      <div class="form-title">Reserva tu mesa</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="res-nombre">Nombre</label>
+          <input id="res-nombre" type="text" placeholder="Tu nombre" />
+        </div>
+        <div class="form-group">
+          <label for="res-tel">Tu WhatsApp</label>
+          <input id="res-tel" type="tel" placeholder="+57 300..." />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="res-fecha">Fecha</label>
+          <input id="res-fecha" type="date" />
+        </div>
+        <div class="form-group">
+          <label for="res-personas">Personas</label>
+          <select id="res-personas">
+            <option>1-2 personas</option>
+            <option>3-4 personas</option>
+            <option>5-6 personas</option>
+            <option>Grupo grande (+7)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="res-mensaje">Mensaje (opcional)</label>
+        <textarea id="res-mensaje" placeholder="¿Alguna solicitud especial? Cumpleaños, alergias..."></textarea>
+      </div>
+      <div id="res-error" style="display:none; color:var(--coral); font-size:0.85rem; margin-bottom:0.8rem;">
+        ⚠️ Por favor completa tu nombre y la fecha antes de continuar.
+      </div>
+      <button class="btn-form" onclick="enviarReserva()">Confirmar reserva 🌊</button>
+    </div>
+  </section>
+
+  <script>
+    // Número del restaurante — solo cambia este valor
+    const NUMERO_RESTAURANTE = '573005905404';
+
+    function enviarReserva() {
+      const nombre   = document.getElementById('res-nombre').value.trim();
+      const tel      = document.getElementById('res-tel').value.trim();
+      const fecha    = document.getElementById('res-fecha').value;
+      const personas = document.getElementById('res-personas').value;
+      const mensaje  = document.getElementById('res-mensaje').value.trim();
+      const error    = document.getElementById('res-error');
+
+      // Validación básica
+      if (!nombre || !fecha) {
+        error.style.display = 'block';
+        return;
+      }
+      error.style.display = 'none';
+
+      // Formatear fecha legible: 2024-12-25 → 25/12/2024
+      const [anio, mes, dia] = fecha.split('-');
+      const fechaLegible = `${dia}/${mes}/${anio}`;
+
+      // Armar el mensaje de WhatsApp
+      const texto =
+        `🌊 *Nueva reserva - La Brisa Marina*\n\n` +
+        `👤 *Nombre:* ${nombre}\n` +
+        `📱 *WhatsApp cliente:* ${tel || 'No indicado'}\n` +
+        `📅 *Fecha:* ${fechaLegible}\n` +
+        `👥 *Personas:* ${personas}\n` +
+        (mensaje ? `💬 *Solicitud especial:* ${mensaje}\n` : '') +
+        `\n_Reserva enviada desde la página web_`;
+
+      // Abrir WhatsApp con el mensaje listo
+      const url = `https://wa.me/${NUMERO_RESTAURANTE}?text=${encodeURIComponent(texto)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">La <span>Brisa</span> Marina</div>
+    <p>© 2024 La Brisa Marina · Santa Marta, Colombia</p>
+    <div class="footer-links">
+      <a href="#menu">Menú</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#reservas">Reservas</a>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOTANTE -->
+  <a href="https://wa.me/573005905404" class="whatsapp-btn" target="_blank">💬</a>
+
+</body>
+</html>
